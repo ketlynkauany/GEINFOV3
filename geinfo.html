@@ -126,18 +126,20 @@
     }
 
     document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
-      const fullKey = enteredYear + lastTwo;
+  e.preventDefault();
+  const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
+  const fullKey = enteredYear + lastTwo;
 
-      const studentName = students[fullKey];
+  const studentName = students[fullKey];
 
-      if (studentName) {
-        document.getElementById("greeting").innerText = "Olá, " + studentName + "!";
-      } else {
-        document.getElementById("greeting").innerText = "Aluno não encontrado.";
-      }
-    });
+  if (studentName) {
+    // Redireciona para a página de perfil com base no nome
+    const pageName = "perfil_" + studentName.replace(/\s+/g, '') + ".html";
+    window.location.href = "perfis/" + encodeURIComponent(pageName);
+  } else {
+    document.getElementById("greeting").innerText = "Aluno não encontrado.";
+  }
+});
   </script>
   
 </body>
