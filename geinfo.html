@@ -1,43 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet'>
-    <link rel="stylesheet">
-    <title>GEINFOV3</title>
+  <meta charset="UTF-8">
+  <title>GEINFOV3 - Identificação</title>
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    h1 {
+      color: #0077cc;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"], input[type="button"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"], input[type="button"] {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover, input[type="button"]:hover {
+      background-color: #005fa3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #greeting {
+      font-size: 18px;
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <form> 
-            <br>
-            <h1>Seja bem vindo ao GEINFOV3 </h1>
-            <br>
-            <h3> Preencha abaixo </h3>
-            <div class="input-box">
-                <input placeholder="Usuário" type="text">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="input-box">
-                <input placeholder="Senha" type="password">
-                <i class="fa-solid fa-lock"></i>
-                <br>
-            </div>
-            <div>
-                <label class="remenber-forgot">
-                    <input type="checkbox">
-                    Lembrar minha sanha
-                </label>
-                <a href="#">Esqueci minha senha</a>
-            </div>
+  <div class="container">
+    <h1>GEINFOV3</h1>
+    <form id="loginForm">
+      <div id="step1">
+        <input type="number" id="yearInput" placeholder="Ano de entrada (ex: 2023)" required>
+        <input type="button" value="Avançar" onclick="nextStep()">
+      </div>
 
-            <button type="submit">Bora la</button>
+      <div id="step2" class="hidden">
+        <input type="number" id="lastTwoDigits" placeholder="Últimos 2 dígitos da matrícula" required>
+        <input type="submit" value="Entrar">
+      </div>
+    </form>
 
-            <div class="register-Link">
-                <p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
-            </div>
-        </form>
-        
-    </div>
+    <div id="greeting"></div>
+  </div>
+
+  <script>
+    const students = {
+      "202336": "Adriely",
+      "202309": "Afonso",
+      "202366": "Alicia",
+      "202330": "Amilton",
+      "202363": "Kael",
+      "202352": "Antony",
+      "202322": "Breno",
+      "202308": "Bruno",
+      "202303": "Cauã",
+      "202332": "Davi",
+      "202321": "Edvan",
+      "202362": "Fabiana",
+      "202380": "Geovana",
+      "202323": "Guilherme",
+      "202351": "Harlley",
+      "202341": "Ingrid",
+      "202325": "Isadora",
+      "202375": "Jade",
+      "202355": "Julia",
+      "202343": "Júlio",
+      "202381": "Ketlyn",
+      "202327": "Lucas de Lima",
+      "202315": "Maria Gabriella",
+      "202367": "Maria Luisa",
+      "202340": "Marina",
+      "202301": "Matheus",
+      "202369": "Mikelly",
+      "202331": "Radmila",
+      "202320": "Ramon",
+      "202307": "Vinícius Alves",
+      "202354": "Vinícius Costa",
+      "202280": "Vitória"
+    };
+
+    let enteredYear = "";
+
+    function nextStep() {
+      const yearInput = document.getElementById("yearInput").value;
+      if (yearInput.length === 4 && !isNaN(yearInput)) {
+        enteredYear = yearInput;
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+      } else {
+        alert("Por favor, insira um ano válido (ex: 2023).");
+      }
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
+      const fullKey = enteredYear + lastTwo;
+
+      const studentName = students[fullKey];
+
+      if (studentName) {
+        document.getElementById("greeting").innerText = "Olá, " + studentName + "!";
+      } else {
+        document.getElementById("greeting").innerText = "Aluno não encontrado.";
+      }
+    });
+  </script>
 </body>
 </html>
