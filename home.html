@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>GEINFOV3 - Início</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #profile {
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .notifications {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .notifications span {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .buttons a {
+      display: inline-block;
+      padding: 15px;
+      background-color: #0077cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      width: 150px;
+    }
+
+    .buttons a:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div id="profile">Bem-vindo, <span id="studentName"></span>!</div>
+    <div class="notifications">
+      🔔 <span id="notifCount">1</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar...">
+    </div>
+
+    <div class="buttons">
+      <a href="#">Avisos</a>
+      <a href="#">Aulas</a>
+      <a href="#">Meu Perfil</a>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const nome = urlParams.get('nome') || 'Usuário';
+    document.getElementById("studentName").innerText = nome;
+  </script>
+</body>
+</html>

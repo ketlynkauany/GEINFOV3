@@ -76,10 +76,9 @@
 
     <div id="greeting"></div>
   </div>
-
-  <script>
-    const students = {
-      "202336": "Adriely",
+<script>
+  const students = {
+    "202336": "Adriely",
       "202309": "Afonso",
       "202366": "Alicia",
       "202330": "Amilton",
@@ -111,37 +110,36 @@
       "202307": "Vinícius Alves",
       "202354": "Vinícius Costa",
       "202280": "Vitória"
-    };
+  };
 
-    let enteredYear = "";
+  let enteredYear = "";
 
-    function nextStep() {
-      const yearInput = document.getElementById("yearInput").value;
-      if (yearInput.length === 4 && !isNaN(yearInput)) {
-        enteredYear = yearInput;
-        document.getElementById("step1").classList.add("hidden");
-        document.getElementById("step2").classList.remove("hidden");
-      } else {
-        alert("Por favor, insira um ano válido (ex: 2023).");
-      }
+  function nextStep() {
+    const yearInput = document.getElementById("yearInput").value;
+    if (yearInput.length === 4 && !isNaN(yearInput)) {
+      enteredYear = yearInput;
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+    } else {
+      alert("Por favor, insira um ano válido (ex: 2023).");
     }
-
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
-  const fullKey = enteredYear + lastTwo;
-
-  const studentName = students[fullKey];
-
-  if (studentName) {
-    // Redireciona para a página de perfil com base no nome
-    const pageName = "perfil_" + studentName.replace(/\s+/g, '') + ".html";
-    window.location.href = "perfis/" + encodeURIComponent(pageName);
-  } else {
-    document.getElementById("greeting").innerText = "Aluno não encontrado.";
   }
-});
-  </script>
-  
+
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
+    const fullKey = enteredYear + lastTwo;
+
+    const studentName = students[fullKey];
+
+    if (studentName) {
+      // Envia para home.html com o nome do aluno na URL
+      window.location.href = "home.html?nome=" + encodeURIComponent(studentName);
+    } else {
+      document.getElementById("greeting").innerText = "Aluno não encontrado.";
+    }
+  });
+</script>
+
 </body>
 </html>
