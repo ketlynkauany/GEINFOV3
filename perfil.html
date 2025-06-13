@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>GEINFO V3 - Lista de Perfis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe9e4;
+      margin: 0;
+      padding: 20px;
+      color: #3a3a3a;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #a6d6c8;
+      color: #204033;
+      padding: 20px;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .profile-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .profile-card {
+      background-color: #d9f0e8;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .profile-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .avatar {
+      background-color: #e76f51;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      user-select: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #204033;
+      margin-bottom: 8px;
+    }
+    .profile-mini-bio {
+      font-size: 0.9rem;
+      color: #555;
+      min-height: 40px;
+    }
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-bg.active {
+      display: flex;
+    }
+    .modal {
+      background: #d9f0e8;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      position: relative;
+      color: #204033;
+      font-family: Arial, sans-serif;
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #e76f51;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .stat-bar {
+      background: #e4e4e4;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 10px 0 20px;
+      height: 18px;
+    }
+    .stat-bar > div {
+      height: 100%;
+      background: #e76f51;
+      text-align: right;
+      padding-right: 8px;
+      color: white;
+      font-weight: bold;
+      line-height: 18px;
+      border-radius: 8px 0 0 8px;
+      white-space: nowrap;
+    }
+    .modal .label {
+      font-weight: bold;
+    }
+    .modal .bio-text {
+      font-style: italic;
+      color: #333;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>Perfis dos Alunos</header>
+  <section class="profile-list" id="profileList"></section>
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <button class="close-btn" id="closeModal">&times;</button>
+      <h2 id="modalName"></h2>
+      <div><span class="label">Bagunceiro:</span></div>
+      <div class="stat-bar"><div id="modalMessy"></div></div>
+      <div><span class="label">Inteligência:</span></div>
+      <div class="stat-bar"><div id="modalSmart"></div></div>
+      <div><span class="label">Turma:</span> <span id="modalClass"></span></div>
+      <div class="bio-text" id="modalBio"></div>
+    </div>
+  </div>
+  <script>
+    const studentNames = [
+      "Adriely", "Afonso", "Alicia", "Amilton", "Kael", "Antony", "Breno", "Bruno", "Cauã",
+      "Davi", "Edvan", "Fabiana", "Geovana", "Guilherme", "Harlley", "Ingrid", "Isadora",
+      "Jade", "Julia", "Júlio", "Ketlyn", "Lucas de Lima", "Maria Gabriella", "Maria Luisa",
+      "Marina", "Matheus", "Mikelly", "Radmila", "Ramon", "Vinícius Alves", "Vinícius Costa",
+      "Vitória"
+    ];
+    const students = studentNames.map(name => ({
+      name,
+      class: "3º ano vespertino",
+      bio: "Bio ainda não personalizada.",
+      messy: Math.floor(Math.random() * 101),
+      smart: Math.floor(Math.random() * 101)
+    }));
+    const profileList = document.getElementById('profileList');
+    const modalBg = document.getElementById('modalBg');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalName = document.getElementById('modalName');
+    const modalMessy = document.getElementById('modalMessy');
+    const modalSmart = document.getElementById('modalSmart');
+    const modalClass = document.getElementById('modalClass');
+    const modalBio = document.getElementById('modalBio');
+    students.forEach(student => {
+      const card = document.createElement('div');
+      card.className = 'profile-card';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-pressed', 'false');
+      card.innerHTML = `
+        <div class="avatar">${student.name.split(' ').map(n => n[0]).join('')}</div>
+        <div class="profile-name">${student.name}</div>
+        <div class="profile-mini-bio">${student.bio}</div>
+      `;
+      card.addEventListener('click', () => openModal(student));
+      card.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') openModal(student);
+      });
+      profileList.appendChild(card);
+    });
+    function openModal(student) {
+      modalName.textContent = student.name;
+      modalMessy.style.width = student.messy + '%';
+      modalMessy.textContent = student.messy + '%';
+      modalSmart.style.width = student.smart + '%';
+      modalSmart.textContent = student.smart + '%';
+      modalClass.textContent = student.class;
+      modalBio.textContent = student.bio;
+      modalBg.classList.add('active');
+    }
+    closeModalBtn.addEventListener('click', () => {
+      modalBg.classList.remove('active');
+    });
+    modalBg.addEventListener('click', e => {
+      if (e.target === modalBg) {
+        modalBg.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+

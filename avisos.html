@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEINFO V3 - Avisos</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff6f3;
+    }
+
+    header {
+      background-color: #ff7e6b;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #ff4d36;
+    }
+
+    .aviso {
+      background-color: #fff;
+      border-left: 6px solid #b2f2bb;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .aviso h3 {
+      margin-top: 0;
+      color: #ff4d36;
+    }
+
+    .aviso small {
+      color: #888;
+    }
+
+    .comentarios {
+      margin-top: 10px;
+      padding-left: 15px;
+    }
+
+    .comentarios p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .novo-aviso {
+      margin-top: 30px;
+      text-align: right;
+    }
+
+    .novo-aviso button {
+      padding: 10px 20px;
+      background-color: #63e6be;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .novo-aviso button:hover {
+      background-color: #38d9a9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>GEINFO V3 - Avisos</div>
+    <a href="home.html" style="color:white; text-decoration:none;">Voltar</a>
+  </header>
+
+  <div class="container">
+    <h1>📢 Avisos da Turma</h1>
+
+    <div class="aviso">
+      <h3>Aula de História Remarcada</h3>
+      <small>Postado em 13/06/2025 por Prof. Ricardo</small>
+      <p>A aula de história que seria na sexta foi remarcada para segunda no Lab 2 às 14h.</p>
+      <div class="comentarios">
+        <p><strong>Ketlyn:</strong> Obrigada pelo aviso!</p>
+        <p><strong>Vinícius Alves:</strong> Top, valeu prof.</p>
+      </div>
+    </div>
+
+    <div class="aviso">
+      <h3>Material para a Prova de Química</h3>
+      <small>Postado em 12/06/2025 por Profª. Marina</small>
+      <p>O slide da aula do dia 10 e a lista de exercícios foram adicionados em "Materiais de Aulas Ministradas".</p>
+      <div class="comentarios">
+        <p><strong>Alicia:</strong> Já vi, tá bem explicado! 💚</p>
+      </div>
+    </div>
+
+    <div class="novo-aviso">
+      <button disabled>+ Novo Aviso</button>
+    </div>
+  </div>
+
+</body>
+</html>
+

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>GEINFO V3 - Comentários</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe9e4; 
+      margin: 0;
+      padding: 20px;
+      color: #3a3a3a;
+    }
+
+    header {
+      background-color: #a6d6c8;
+      color: #204033;
+      padding: 15px 20px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    form {
+      background-color: #d9f0e8; 
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    form textarea {
+      width: 100%;
+      height: 80px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    form input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    form button {
+      background-color: #e76f51; /* salmão */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #d04e34;
+    }
+
+    .comments-list {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .comment {
+      background-color: white;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .comment .author {
+      font-weight: bold;
+      color: #204033;
+      margin-bottom: 5px;
+    }
+
+    .comment .text {
+      white-space: pre-wrap;
+    }
+
+    .comment button.delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      border: none;
+      color: #e76f51;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .comment button.delete-btn:hover {
+      color: #d04e34;
+    }
+
+    nav {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    nav a {
+      background-color: #e76f51;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      margin: 0 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #d04e34;
+    }
+
+  </style>
+</head>
+<body>
+  <header>Comentários da Turma</header>
+
+  <form id="commentForm">
+    <textarea id="commentText" placeholder="Escreva seu comentário aqui..." required></textarea>
+    <input type="text" id="authorName" placeholder="Seu nome" required />
+    <button type="submit">Adicionar Comentário</button>
+  </form>
+
+  <div class="comments-list" id="commentsList">
+    
+  </div>
+
+  <nav>
+    <a href="home.html">Voltar à Tela Inicial</a>
+    <a href="avisos.html">Avisos</a>
+    <a href="aulas.html">Aulas</a>
+    <a href="professores.html">Professores</a>
+    <a href="campus.html">Campus</a>
+  </nav>
+
+  <script>
+    const form = document.getElementById('commentForm');
+    const commentsList = document.getElementById('commentsList');
+
+    
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+    function renderComments() {
+      commentsList.innerHTML = '';
+      comments.forEach((c, index) => {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+
+        const authorEl = document.createElement('div');
+        authorEl.classList.add('author');
+        authorEl.textContent = c.author;
+
+        const textEl = document.createElement('div');
+        textEl.classList.add('text');
+        textEl.textContent = c.text;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.textContent = '✖';
+        deleteBtn.title = 'Excluir comentário';
+        deleteBtn.onclick = () => {
+          comments.splice(index, 1);
+          localStorage.setItem('comments', JSON.stringify(comments));
+          renderComments();
+        };
+
+        commentDiv.appendChild(authorEl);
+        commentDiv.appendChild(textEl);
+        commentDiv.appendChild(deleteBtn);
+
+        commentsList.appendChild(commentDiv);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const text = document.getElementById('commentText').value.trim();
+      const author = document.getElementById('authorName').value.trim();
+
+      if (text && author) {
+        comments.push({ author, text });
+        localStorage.setItem('comments', JSON.stringify(comments));
+        renderComments();
+
+        form.reset();
+      }
+    });
+
+    renderComments();
+  </script>
+</body>
+</html>

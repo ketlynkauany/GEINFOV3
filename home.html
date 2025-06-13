@@ -1,107 +1,298 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>GEINFOV3 - Início</title>
-  <link rel="stylesheet" href="css/styles.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #fdf6f0;
+      display: flex;
+    }
+    .sidebar {
+      background-color: #f4a896;
+      width: 220px;
+      height: 100vh;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: white;
+      transition: width 0.3s;
+      overflow: hidden;
+    }
+    .sidebar.collapsed {
+      width: 50px;
+    }
+    .sidebar h2, .sidebar a {
+      transition: opacity 0.3s;
+    }
+    .sidebar.collapsed h2, .sidebar.collapsed a {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    .sidebar a:hover {
+      background-color: #e38770;
+    }
+    .main-content {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+      transition: margin-left 0.3s;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
     }
 
+    .main-content.collapsed {
+      margin-left: 50px;
+      width: calc(100% - 50px);
+    }
     header {
-      background-color: #0077cc;
+      background-color: #f4a896;
       color: white;
-      padding: 15px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
-
-    #profile {
+    .greeting {
+      position: absolute;
+      top: 100px; 
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffd9cc;
+      color: #333;
+      padding: 20px 30px;
+      border-radius: 12px;
+      font-size: 22px;
       font-weight: bold;
+      animation: fadeOut 1s ease-in-out 6s forwards;
+      z-index: 20;
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
 
-    .container {
-      padding: 20px;
+    
+    .profile-section {
+      background-color: #a4d9b3; 
+      padding: 15px 20px;
+      border-radius: 15px;
+      text-align: center;
+      width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      color: #1a3b22; 
+      font-weight: 600;
+      user-select: none;
+      margin-left: 20px;
+      flex-shrink: 0;
     }
-
-    .search-bar {
-      margin-bottom: 20px;
+    .profile-section p {
+      margin: 8px 0;
+      font-size: 16px;
     }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    #studentName {
+      font-size: 20px;
+      font-weight: 700;
+      color: #155724;
     }
 
     .notifications {
       position: relative;
-      margin-bottom: 20px;
+      cursor: pointer;
+      font-size: 22px;
+      user-select: none;
     }
-
-    .notifications span {
+    .notif-dropdown {
+      display: none;
       position: absolute;
-      top: -5px;
-      right: -5px;
-      background: red;
-      color: white;
-      border-radius: 50%;
-      padding: 3px 6px;
-      font-size: 12px;
+      right: 0;
+      top: 30px;
+      background: white;
+      color: black;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 240px;
+      z-index: 10;
     }
-
-    .buttons {
+    .search-bar {
+      padding: 20px;
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      align-items: center;
     }
-
-    .buttons a {
-      display: inline-block;
-      padding: 15px;
-      background-color: #0077cc;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
+    .search-bar input {
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .search-bar span {
+      margin-left: -30px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .card-grid {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       text-align: center;
-      width: 150px;
+      transition: transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .card:hover {
+      transform: scale(1.03);
     }
 
-    .buttons a:hover {
-      background-color: #005fa3;
-    }
+    .main-title {
+  position: absolute;
+  top: 20px;       
+  font-size: 36px;
+  font-weight: 900;
+  color: #f47966;  
+  user-select: none;
+  pointer-events: none;
+  z-index: 15;
+}
+
   </style>
 </head>
 <body>
-  <header>
-    <div id="profile">Bem-vindo, <span id="studentName"></span>!</div>
-    <div class="notifications">
-      🔔 <span id="notifCount">1</span>
-    </div>
-  </header>
+  <div class="sidebar" id="sidebar">
+    <button class="toggle-btn" id="toggleSidebar">◀</button>
+    <h2>Menu</h2>
+    <a href="avisos.html">1. Horários</a>
+    <a href="aulas.html">2. Materiais Ministrados</a>
+    <a href="aulas.html">3. Videoaulas / Links</a>
+    <a href="aulas.html">4. Materiais Futuros</a>
+    <a href="comentarios.html">5. Votações</a>
+    <a href="perfil.html">6. Biografias</a>
+  </div>
+  <div class="main-content" id="mainContent">
+    <header>
+      <div class="notifications" id="notifBtn">
+        🔔
+        <div class="notif-dropdown" id="notifDropdown">
+          <strong>Notificações:</strong>
+          <ul id="recentAvisos">
+            <li>Carregando...</li>
+          </ul>
+        </div>
+      </div>
+      <div class="profile-section">
+        <p><strong id="studentName"></strong></p>
+        <p>Imagem do personagem (futura)</p>
+      </div>
+      <div class="greeting" id="welcomeMessage">Bem-vindo(a), <span id="nameTemp"></span>!</div>
+    </header>
 
-  <div class="container">
+    <div class="main-title">GEINFO</div>
+
     <div class="search-bar">
-      <input type="text" placeholder="Buscar...">
+      <input type="text" placeholder="Buscar..." />
+      <span>🔍</span>
     </div>
-
-    <div class="buttons">
-      <a href="#">Avisos</a>
-      <a href="#">Aulas</a>
-      <a href="#">Meu Perfil</a>
+    <div class="card-grid">
+      <a href="avisos.html" class="card">📅 Horários</a>
+      <a href="aulas.html" class="card">📚 Materiais Ministrados</a>
+      <a href="aulas.html" class="card">🎥 Videoaulas e Links</a>
+      <a href="aulas.html" class="card">📝 Materiais Futuros</a>
+      <a href="comentarios.html" class="card">🗳️ Votações</a>
+      <a href="perfil.html" class="card">👤 Biografias da Turma</a>
     </div>
   </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const nome = urlParams.get('nome') || 'Usuário';
+    const nome = urlParams.get("nome") || "Usuário";
     document.getElementById("studentName").innerText = nome;
+    document.getElementById("nameTemp").innerText = nome;
+    document.getElementById("welcomeMessage").style.display = "block";
+
+    
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("mainContent");
+    const toggleBtn = document.getElementById("toggleSidebar");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      mainContent.classList.toggle("collapsed");
+      toggleBtn.textContent = sidebar.classList.contains("collapsed") ? "▶" : "◀";
+    });
+
+    
+    fetch("avisos.json")
+      .then((response) => response.json())
+      .then((data) => {
+        const recentAvisos = data.slice(0, 5);
+        const ul = document.getElementById("recentAvisos");
+        ul.innerHTML = "";
+        recentAvisos.forEach((aviso) => {
+          const li = document.createElement("li");
+          li.textContent = aviso.titulo || aviso.texto || "Aviso";
+          ul.appendChild(li);
+        });
+      })
+      .catch((err) => {
+        document.getElementById("recentAvisos").innerHTML = "<li>Erro ao carregar avisos</li>";
+      });
+
+    
+    const notifBtn = document.getElementById("notifBtn");
+    const notifDropdown = document.getElementById("notifDropdown");
+
+    notifBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); 
+      if (notifDropdown.style.display === "block") {
+        notifDropdown.style.display = "none";
+      } else {
+        notifDropdown.style.display = "block";
+      }
+    });
+
+    
+    document.addEventListener("click", () => {
+      notifDropdown.style.display = "none";
+    });
   </script>
 </body>
 </html>
+
+
+

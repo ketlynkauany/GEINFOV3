@@ -3,49 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>GEINFOV3 - Identificação</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
-    body {
-      background-color: #f0f2f5;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fdf6f0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
     }
 
     .container {
       background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
       text-align: center;
-      width: 300px;
+      width: 320px;
+      border: 2px solid #f4a896;
     }
 
     h1 {
-      color: #0077cc;
-      margin-bottom: 20px;
+      color: #f4a896;
+      margin-bottom: 25px;
+      font-size: 26px;
     }
 
-    input[type="number"], input[type="button"], input[type="submit"] {
+    input[type="number"],
+    input[type="button"],
+    input[type="submit"] {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
-      border-radius: 5px;
+      border-radius: 6px;
       border: 1px solid #ccc;
+      font-size: 15px;
     }
 
-    input[type="submit"], input[type="button"] {
-      background-color: #0077cc;
-      color: white;
+    input[type="submit"],
+    input[type="button"] {
+      background-color: #c9f5d8;
+      color: #333;
+      font-weight: bold;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    input[type="submit"]:hover, input[type="button"]:hover {
-      background-color: #005fa3;
+    input[type="submit"]:hover,
+    input[type="button"]:hover {
+      background-color: #aeeec3;
     }
 
     .hidden {
@@ -53,9 +66,9 @@
     }
 
     #greeting {
-      font-size: 18px;
+      font-size: 16px;
       margin-top: 20px;
-      color: green;
+      color: #d8000c;
     }
   </style>
 </head>
@@ -76,70 +89,46 @@
 
     <div id="greeting"></div>
   </div>
-<script>
-  const students = {
-    "202336": "Adriely",
-      "202309": "Afonso",
-      "202366": "Alicia",
-      "202330": "Amilton",
-      "202363": "Kael",
-      "202352": "Antony",
-      "202322": "Breno",
-      "202308": "Bruno",
-      "202303": "Cauã",
-      "202332": "Davi",
-      "202321": "Edvan",
-      "202362": "Fabiana",
-      "202380": "Geovana",
-      "202323": "Guilherme",
-      "202351": "Harlley",
-      "202341": "Ingrid",
-      "202325": "Isadora",
-      "202375": "Jade",
-      "202355": "Julia",
-      "202343": "Júlio",
-      "202381": "Ketlyn",
-      "202327": "Lucas de Lima",
-      "202315": "Maria Gabriella",
-      "202367": "Maria Luisa",
-      "202340": "Marina",
-      "202301": "Matheus",
-      "202369": "Mikelly",
-      "202331": "Radmila",
-      "202320": "Ramon",
-      "202307": "Vinícius Alves",
-      "202354": "Vinícius Costa",
-      "202280": "Vitória"
-  };
 
-  let enteredYear = "";
+  <script>
+    const students = {
+      "202336": "Adriely", "202309": "Afonso", "202366": "Alicia", "202330": "Amilton",
+      "202363": "Kael", "202352": "Antony", "202322": "Breno", "202308": "Bruno",
+      "202303": "Cauã", "202332": "Davi", "202321": "Edvan", "202362": "Fabiana",
+      "202380": "Geovana", "202323": "Guilherme", "202351": "Harlley", "202341": "Ingrid",
+      "202325": "Isadora", "202375": "Jade", "202355": "Julia", "202343": "Júlio",
+      "202381": "Ketlyn", "202327": "Lucas de Lima", "202315": "Maria Gabriella",
+      "202367": "Maria Luisa", "202340": "Marina", "202301": "Matheus",
+      "202369": "Mikelly", "202331": "Radmila", "202320": "Ramon",
+      "202307": "Vinícius Alves", "202354": "Vinícius Costa", "202280": "Vitória"
+    };
 
-  function nextStep() {
-    const yearInput = document.getElementById("yearInput").value;
-    if (yearInput.length === 4 && !isNaN(yearInput)) {
-      enteredYear = yearInput;
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
-    } else {
-      alert("Por favor, insira um ano válido (ex: 2023).");
+    let enteredYear = "";
+
+    function nextStep() {
+      const yearInput = document.getElementById("yearInput").value;
+      if (yearInput.length === 4 && !isNaN(yearInput)) {
+        enteredYear = yearInput;
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+      } else {
+        alert("Por favor, insira um ano válido (ex: 2023).");
+      }
     }
-  }
 
-  document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
-    const fullKey = enteredYear + lastTwo;
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
+      const fullKey = enteredYear + lastTwo;
 
-    const studentName = students[fullKey];
+      const studentName = students[fullKey];
 
-    if (studentName) {
-      // Envia para home.html com o nome do aluno na URL
-      window.location.href = "home.html?nome=" + encodeURIComponent(studentName);
-    } else {
-      document.getElementById("greeting").innerText = "Aluno não encontrado.";
-    }
-  });
-</script>
-
+      if (studentName) {
+        window.location.href = "home.html?nome=" + encodeURIComponent(studentName);
+      } else {
+        document.getElementById("greeting").innerText = "Aluno não encontrado.";
+      }
+    });
+  </script>
 </body>
 </html>
