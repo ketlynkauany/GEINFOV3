@@ -200,6 +200,7 @@
       <a href="geinfo.html">Sair</a>
     </div>
   </div>
+
   <div class="main">
     <header>
       <div class="logo-title">GEINFOV3</div>
@@ -256,10 +257,14 @@
     const nome = new URLSearchParams(window.location.search).get("nome") || "Usuário";
     document.getElementById("studentName").innerText = nome;
 
-    // Verifica caminho da imagem com base no nome
-    const basePath = "fotosPerfis/alunos/";
-    const nomeFormatado = nome.toLowerCase().replace(/ /g, '_');
-    let foto = `${basePath}${nomeFormatado}.jpg`;
+    // Lógica da imagem de perfil
+    let foto;
+    if (nome.toLowerCase().includes("ketlyn")) {
+      foto = "fotosPerfis/alunos/ketlyn.jpg";
+    } else {
+      const nomeFormatado = nome.toLowerCase().replace(/ /g, '_');
+      foto = `fotosPerfis/alunos/${nomeFormatado}.jpg`;
+    }
     document.getElementById("profilePic").src = foto;
 
     // dropdown avisos
@@ -270,7 +275,10 @@
       e.stopPropagation();
       notifDropdown.style.display = notifDropdown.style.display === "block" ? "none" : "block";
     });
-    document.addEventListener("click", () => notifDropdown.style.display = "none");
+
+    document.addEventListener("click", () => {
+      notifDropdown.style.display = "none";
+    });
 
     fetch("avisos.json")
       .then((res) => res.json())
@@ -289,6 +297,7 @@
   </script>
 </body>
 </html>
+
 
 
 
