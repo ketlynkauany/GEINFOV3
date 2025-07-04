@@ -2,63 +2,83 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>GEINFOV3 - Identificação</title>
+  <title>GEINFOV3 - Login Futurista</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body {
-      background-color: #fdf6f0;
+      background: linear-gradient(135deg, #c8f7dc, #ffddd2);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      animation: backgroundShift 10s ease infinite alternate;
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: left top; }
+      100% { background-position: right bottom; }
     }
 
     .container {
-      background-color: white;
-      padding: 30px 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(200, 247, 220, 0.6), 0 0 40px rgba(255, 221, 210, 0.4);
       text-align: center;
-      width: 320px;
-      border: 2px solid #f4a896;
+      width: 100%;
+      max-width: 360px;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
     }
 
     h1 {
-      color: #f4a896;
-      margin-bottom: 25px;
-      font-size: 26px;
+      font-size: 28px;
+      color: #ff8364;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 3px #c8f7dc;
     }
 
     input[type="number"],
     input[type="button"],
     input[type="submit"] {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 15px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    input[type="number"]:focus {
+      border-color: #ffddd2;
+      outline: none;
+      box-shadow: 0 0 8px #c8f7dc;
     }
 
     input[type="submit"],
     input[type="button"] {
-      background-color: #c9f5d8;
+      background: linear-gradient(90deg, #c8f7dc, #ffddd2);
       color: #333;
       font-weight: bold;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover,
     input[type="button"]:hover {
-      background-color: #aeeec3;
+      opacity: 0.9;
+      transform: scale(1.02);
     }
 
     .hidden {
@@ -66,9 +86,16 @@
     }
 
     #greeting {
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 20px;
-      color: #d8000c;
+      color: #ff5555;
+      font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        margin: 0 20px;
+      }
     }
   </style>
 </head>
@@ -120,7 +147,6 @@
       e.preventDefault();
       const lastTwo = document.getElementById("lastTwoDigits").value.padStart(2, '0');
       const fullKey = enteredYear + lastTwo;
-
       const studentName = students[fullKey];
 
       if (studentName) {
@@ -130,6 +156,5 @@
       }
     });
   </script>
-  
 </body>
 </html>
