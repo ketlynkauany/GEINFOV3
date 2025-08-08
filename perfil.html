@@ -6,15 +6,15 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #ffe9e4;
+      background: linear-gradient(120deg, #c8f7dc 0%, #ffddd2 100%);
       margin: 0;
       padding: 20px;
-      color: #3a3a3a;
+      color: #163826;
       min-height: 100vh;
     }
     header {
-      background-color: #a6d6c8;
-      color: #204033;
+      background: linear-gradient(180deg, #ffc2b3, #ffdfd6);
+      color: #163826;
       padding: 20px;
       text-align: center;
       font-size: 2rem;
@@ -31,13 +31,14 @@
       margin: 0 auto;
     }
     .profile-card {
-      background-color: #d9f0e8;
+      background: linear-gradient(180deg, #d9f0e8, #ffc2b3);
       border-radius: 12px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.12);
       padding: 20px;
       text-align: center;
       cursor: pointer;
       transition: transform 0.2s ease;
+      color: #163826;
     }
     .profile-card:hover {
       transform: scale(1.05);
@@ -62,7 +63,14 @@
       font-size: 1.2rem;
       font-weight: bold;
       color: #204033;
+      margin-bottom: 4px;
+    }
+    .profile-nickname {
+      font-style: italic;
+      color: #555;
       margin-bottom: 8px;
+      font-size: 0.95rem;
+      min-height: 20px;
     }
     .profile-mini-bio {
       font-size: 0.9rem;
@@ -82,7 +90,7 @@
       display: flex;
     }
     .modal {
-      background: #d9f0e8;
+      background: linear-gradient(180deg, #d9f0e8, #ffc2b3);
       border-radius: 12px;
       padding: 30px;
       max-width: 400px;
@@ -109,6 +117,11 @@
     }
     .modal h2 {
       margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .modal .modal-nickname {
+      font-style: italic;
+      color: #555;
       margin-bottom: 15px;
     }
     .stat-bar {
@@ -143,71 +156,133 @@
 <body>
   <header>Perfis dos Alunos</header>
   <section class="profile-list" id="profileList"></section>
-  <div class="modal-bg" id="modalBg">
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <div class="modal">
-      <button class="close-btn" id="closeModal">&times;</button>
+      <button class="close-btn" id="closeModal" aria-label="Fechar modal">&times;</button>
       <h2 id="modalName"></h2>
+      <div class="modal-nickname" id="modalNickname"></div>
       <div><span class="label">Bagunceiro:</span></div>
       <div class="stat-bar"><div id="modalMessy"></div></div>
-      <div><span class="label">Inteligência:</span></div>
-      <div class="stat-bar"><div id="modalSmart"></div></div>
+      <div><span class="label">Presente nas aulas:</span></div>
+      <div class="stat-bar"><div id="modalPresent"></div></div>
+      <div><span class="label">Falador:</span></div>
+      <div class="stat-bar"><div id="modalTalkative"></div></div>
+      <div><span class="label">Responde perguntas:</span></div>
+      <div class="stat-bar"><div id="modalResponsive"></div></div>
       <div><span class="label">Turma:</span> <span id="modalClass"></span></div>
       <div class="bio-text" id="modalBio"></div>
     </div>
   </div>
+
   <script>
-    const studentNames = [
-      "Adriely", "Afonso", "Alicia", "Amilton", "Kael", "Antony", "Breno", "Bruno", "Cauã",
-      "Davi", "Edvan", "Fabiana", "Geovana", "Guilherme", "Harlley", "Ingrid", "Isadora",
-      "Jade", "Julia", "Júlio", "Ketlyn", "Lucas de Lima", "Maria Gabriella", "Maria Luisa",
-      "Marina", "Matheus", "Mikelly", "Radmila", "Ramon", "Vinícius Alves", "Vinícius Costa",
-      "Vitória"
-    ];
-    const students = studentNames.map(name => ({
-      name,
-      class: "3º ano vespertino",
-      bio: "Bio ainda não personalizada.",
-      messy: Math.floor(Math.random() * 101),
-      smart: Math.floor(Math.random() * 101)
-    }));
+    const students = [
+  { name: "Adriely", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 70, present: 90, talkative: 60, responsive: 80 },
+  { name: "Afonso", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 20, present: 95, talkative: 30, responsive: 90 },
+  { name: "Alicia", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 40, present: 85, talkative: 50, responsive: 70 },
+  { name: "Amilton", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 55, present: 80, talkative: 75, responsive: 65 },
+  { name: "Kael", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 30, present: 88, talkative: 40, responsive: 75 },
+  { name: "Antony", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 60, present: 92, talkative: 65, responsive: 85 },
+  { name: "Breno", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 25, present: 90, talkative: 35, responsive: 80 },
+  { name: "Bruno", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 45, present: 85, talkative: 55, responsive: 70 },
+  { name: "Cauã", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 35, present: 93, talkative: 48, responsive: 78 },
+  { name: "Davi", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 50, present: 89, talkative: 70, responsive: 85 },
+  { name: "Edvan", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 42, present: 87, talkative: 52, responsive: 72 },
+  { name: "Fabiana", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 28, present: 91, talkative: 45, responsive: 80 },
+  { name: "Geovana", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 33, present: 90, talkative: 53, responsive: 77 },
+  { name: "Guilherme", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 55, present: 84, talkative: 60, responsive: 70 },
+  { name: "Harlley", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 40, present: 86, talkative: 50, responsive: 75 },
+  { name: "Ingrid", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 38, present: 88, talkative: 55, responsive: 79 },
+  { name: "Isadora", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 30, present: 92, talkative: 48, responsive: 82 },
+  { name: "Jade", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 22, present: 94, talkative: 38, responsive: 90 },
+  { name: "Julia", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 48, present: 87, talkative: 62, responsive: 73 },
+  { name: "Júlio", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 35, present: 85, talkative: 40, responsive: 68 },
+  { name: "Ketlyn", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 29, present: 91, talkative: 47, responsive: 80 },
+  { name: "Lucas de Lima", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 33, present: 89, talkative: 52, responsive: 75 },
+  { name: "Maria Gabriella", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 41, present: 90, talkative: 55, responsive: 79 },
+  { name: "Maria Luisa", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 37, present: 92, talkative: 53, responsive: 78 },
+  { name: "Marina", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 30, present: 88, talkative: 47, responsive: 74 },
+  { name: "Matheus", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 52, present: 86, talkative: 60, responsive: 70 },
+  { name: "Mikelly", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 35, present: 89, talkative: 50, responsive: 75 },
+  { name: "Radmila", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 25, present: 91, talkative: 40, responsive: 80 },
+  { name: "Ramon", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 40, present: 90, talkative: 45, responsive: 78 },
+  { name: "Vinícius Alves", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 38, present: 85, talkative: 48, responsive: 72 },
+  { name: "Vinícius Costa", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 42, present: 87, talkative: 50, responsive: 75 },
+  { name: "Vitória", nickname: "", class: "3º ano vespertino", bio: "Bio ainda não personalizada.", messy: 33, present: 92, talkative: 45, responsive: 80 }
+];
+
+
     const profileList = document.getElementById('profileList');
     const modalBg = document.getElementById('modalBg');
     const closeModalBtn = document.getElementById('closeModal');
     const modalName = document.getElementById('modalName');
+    const modalNickname = document.getElementById('modalNickname');
     const modalMessy = document.getElementById('modalMessy');
-    const modalSmart = document.getElementById('modalSmart');
+    const modalPresent = document.getElementById('modalPresent');
+    const modalTalkative = document.getElementById('modalTalkative');
+    const modalResponsive = document.getElementById('modalResponsive');
     const modalClass = document.getElementById('modalClass');
     const modalBio = document.getElementById('modalBio');
+
+    function createInitials(name) {
+      return name.split(' ').map(n => n[0]).join('');
+    }
+
     students.forEach(student => {
       const card = document.createElement('div');
       card.className = 'profile-card';
       card.tabIndex = 0;
       card.setAttribute('role', 'button');
       card.setAttribute('aria-pressed', 'false');
+
+      // Apelido com fallback
+      const nicknameDisplay = student.nickname && student.nickname.trim() !== '' 
+        ? student.nickname 
+        : 'Apelido ainda não personalizado';
+
       card.innerHTML = `
-        <div class="avatar">${student.name.split(' ').map(n => n[0]).join('')}</div>
+        <div class="avatar">${createInitials(student.name)}</div>
         <div class="profile-name">${student.name}</div>
+        <div class="profile-nickname">${nicknameDisplay}</div>
         <div class="profile-mini-bio">${student.bio}</div>
       `;
+
       card.addEventListener('click', () => openModal(student));
       card.addEventListener('keypress', e => {
         if(e.key === 'Enter' || e.key === ' ') openModal(student);
       });
       profileList.appendChild(card);
     });
+
     function openModal(student) {
       modalName.textContent = student.name;
+
+      const nicknameDisplay = student.nickname && student.nickname.trim() !== '' 
+        ? student.nickname 
+        : 'Apelido ainda não personalizado';
+
+      modalNickname.textContent = nicknameDisplay;
+
       modalMessy.style.width = student.messy + '%';
       modalMessy.textContent = student.messy + '%';
-      modalSmart.style.width = student.smart + '%';
-      modalSmart.textContent = student.smart + '%';
+
+      modalPresent.style.width = student.present + '%';
+      modalPresent.textContent = student.present + '%';
+
+      modalTalkative.style.width = student.talkative + '%';
+      modalTalkative.textContent = student.talkative + '%';
+
+      modalResponsive.style.width = student.responsive + '%';
+      modalResponsive.textContent = student.responsive + '%';
+
       modalClass.textContent = student.class;
       modalBio.textContent = student.bio;
       modalBg.classList.add('active');
     }
+
     closeModalBtn.addEventListener('click', () => {
       modalBg.classList.remove('active');
     });
+
     modalBg.addEventListener('click', e => {
       if (e.target === modalBg) {
         modalBg.classList.remove('active');
@@ -216,6 +291,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
