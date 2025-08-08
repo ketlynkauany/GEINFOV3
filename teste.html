@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teste Perfil</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+      text-align: center;
+    }
+    #profilePic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #f47966;
+      margin-bottom: 10px;
+    }
+    #studentName {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Perfil do Usuário</h1>
+  <img id="profilePic" src="fotosPerfis/alunos/default.jpg" alt="Foto de perfil" />
+  <div id="studentName">Usuário</div>
+
+  <script>
+    function normalizeName(name) {
+      if (!name) return '';
+      return name.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // tira acento
+        .replace(/[^\w\s-]/g, '') // tira simbolos
+        .trim()
+        .replace(/\s+/g, '_');
+    }
+
+    // Pega o parâmetro nome da URL, ex: ?nome=2023, 81 (ketlyn)
+    const urlParams = new URLSearchParams(window.location.search);
+    const nomeParam = urlParams.get('nome') || 'Usuário';
+
+    // Atualiza o nome na página
+    document.getElementById('studentName').innerText = nomeParam;
+
+    // Define a imagem
+    const basePath = 'fotosPerfis/alunos/';
+    const imgEl = document.getElementById('profilePic');
+
+    // Se o nome tiver "ketlyn" carrega ketlyn.jpg, senão tenta normalizar e carregar a imagem
+    if (nomeParam.toLowerCase().includes('ketlyn')) {
+      imgEl.src = basePath + 'ketlyn.jpg';
+    } else {
+      const imgName = normalizeName(nomeParam) + '.jpg';
+      imgEl.src = basePath + imgName;
+    }
+
+    // Se a imagem não existir, carrega a default
+    imgEl.onerror = function() {
+      imgEl.src = basePath + 'default.jpg';
+    };
+  </script>
+</body>
+</html>
