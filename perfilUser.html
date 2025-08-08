@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perfil do Usuário</title>
+  <style>
+    :root {
+      --verde-bebe: #c8f7dc;
+      --salmao-claro: #ffddd2;
+      --fundo: #fffaf6;
+      --texto: #333;
+      --botao-bg: var(--salmao-claro);
+      --botao-hover-bg: var(--verde-bebe);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      display: flex;
+      justify-content: center; /* centraliza horizontal */
+      align-items: center;     /* centraliza vertical */
+      min-height: 100vh;
+    }
+
+    main {
+      background: linear-gradient(to right, var(--verde-bebe), var(--salmao-claro));
+      padding: 2rem 2rem 4rem 2rem;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+      position: relative;
+      text-align: center;
+    }
+
+    .exit-arrow {
+      position: fixed; /* fixa no canto da tela */
+      top: 1rem;
+      left: 1rem;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #444;
+      background-color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      user-select: none;
+      transition: background-color 0.3s, color 0.3s;
+      z-index: 100;
+    }
+    .exit-arrow:hover {
+      background-color: var(--verde-bebe);
+      color: black;
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid white;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+      background: white;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .nome-principal {
+      font-size: 2.2rem;
+      font-weight: 700;
+      user-select: none;
+      margin-bottom: 0.3rem;
+    }
+
+    .apelido {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 1.3rem;
+      min-height: 1.6em;
+      user-select: text;
+      outline: none;
+    }
+
+    .bio {
+      font-size: 1rem;
+      color: #666;
+      min-height: 3em;
+      user-select: text;
+      white-space: pre-wrap;
+      margin: 0 auto;
+      max-width: 400px;
+    }
+
+    #apelido-edit, #bio-edit {
+      width: 80%;
+      max-width: 400px;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      display: none;
+      margin: 0 auto 1rem auto;
+    }
+
+    .profile-buttons {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .profile-buttons button {
+      background-color: var(--botao-bg);
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      min-width: 130px;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    .profile-buttons button:hover {
+      background-color: var(--botao-hover-bg);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="home.html" class="exit-arrow" title="Voltar">&#8592;</a>
+
+  <main>
+    <img src="" alt="Foto de perfil" class="profile-pic" id="profilePic" />
+
+    <div class="nome-principal" id="nomePrincipal">Usuário</div>
+    <div class="apelido" id="apelidoDisplay" tabindex="0" aria-label="Apelido do usuário"></div>
+    <input type="text" id="apelido-edit" maxlength="30" aria-label="Editar apelido do usuário" />
+
+    <p class="bio" id="bioDisplay"></p>
+    <textarea id="bio-edit" rows="4" aria-label="Editar biografia do usuário"></textarea>
+
+    <div class="profile-buttons">
+      <button id="editApelidoBtn">Editar Apelido</button>
+      <button id="editBioBtn">Editar Bio</button>
+    </div>
+  </main>
+
+<script>
+  function normalizeName(name) {
+    return name
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '_')
+      .toLowerCase();
+  }
+
+  // Elementos
+  const nomePrincipalEl = document.getElementById('nomePrincipal');
+  const apelidoDisplay = document.getElementById('apelidoDisplay');
+  const apelidoEdit = document.getElementById('apelido-edit');
+  const bioDisplay = document.getElementById('bioDisplay');
+  const bioEdit = document.getElementById('bio-edit');
+
+  const editApelidoBtn = document.getElementById('editApelidoBtn');
+  const editBioBtn = document.getElementById('editBioBtn');
+  const profilePic = document.getElementById('profilePic');
+
+  // Buscar dados
+  const urlParams = new URLSearchParams(window.location.search);
+  const nomeParam = urlParams.get('nome') || 'Usuário';
+  const apelidoSalvo = localStorage.getItem('apelidoUsuario') || '';
+  const bioSalva = localStorage.getItem('bioUsuario') || 'Edite sua bio';
+
+  // Exibir nome principal (fixo)
+  nomePrincipalEl.textContent = nomeParam;
+
+  // Exibir apelido e bio
+  apelidoDisplay.textContent = apelidoSalvo || '(sem apelido)';
+  bioDisplay.textContent = bioSalva;
+
+  // Definir foto
+  const basePath = 'fotosPerfis/alunos/';
+  let imgNome = normalizeName(nomeParam);
+  if (nomeParam.toLowerCase().includes('ketlyn')) imgNome = 'ketlyn';
+
+  profilePic.src = `${basePath}${imgNome}.jpg`;
+  profilePic.onerror = () => { profilePic.src = `${basePath}default.jpg`; };
+
+  // Função para alternar edição de apelido
+  editApelidoBtn.addEventListener('click', () => {
+    if (apelidoEdit.style.display === 'none' || apelidoEdit.style.display === '') {
+      apelidoEdit.value = apelidoDisplay.textContent === '(sem apelido)' ? '' : apelidoDisplay.textContent;
+      apelidoDisplay.style.display = 'none';
+      apelidoEdit.style.display = 'block';
+      apelidoEdit.focus();
+      editApelidoBtn.textContent = 'Confirmar';
+    } else {
+      let novoApelido = apelidoEdit.value.trim();
+      apelidoDisplay.textContent = novoApelido || '(sem apelido)';
+      apelidoDisplay.style.display = 'block';
+      apelidoEdit.style.display = 'none';
+      localStorage.setItem('apelidoUsuario', novoApelido);
+      editApelidoBtn.textContent = 'Editar Apelido';
+      alert('Apelido atualizado!');
+    }
+  });
+
+  // Função para alternar edição de bio
+  editBioBtn.addEventListener('click', () => {
+    if (bioEdit.style.display === 'none' || bioEdit.style.display === '') {
+      bioEdit.value = bioDisplay.textContent === 'Edite sua bio' ? '' : bioDisplay.textContent;
+      bioDisplay.style.display = 'none';
+      bioEdit.style.display = 'block';
+      bioEdit.focus();
+      editBioBtn.textContent = 'Confirmar';
+    } else {
+      let novaBio = bioEdit.value.trim() || 'Edite sua bio';
+      bioDisplay.textContent = novaBio;
+      bioDisplay.style.display = 'block';
+      bioEdit.style.display = 'none';
+      localStorage.setItem('bioUsuario', novaBio);
+      editBioBtn.textContent = 'Editar Bio';
+      alert('Bio atualizada!');
+    }
+  });
+</script>
+
+</body>
+</html>
+
