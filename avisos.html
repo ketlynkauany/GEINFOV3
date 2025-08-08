@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GEINFO V3 - Avisos</title>
-  <link rel="stylesheet" href="css/styles.css">
   <style>
+    :root {
+      --verde-bebe: #c8f7dc;
+      --salmao-claro: #ffddd2;
+      --salmao-escuro: #ff9980;
+      --verde-escuro: #007f5f;
+      --rosa-menu: #ffc1aa;
+      --texto-escuro: #204033;
+      --card-bg: #ffe5dc;
+      --card-border: #ffccb3;
+      --header-bg-gradient: linear-gradient(90deg, var(--salmao-escuro), var(--verde-escuro));
+      --body-bg-gradient: linear-gradient(135deg, var(--salmao-claro) 0%, var(--verde-bebe) 100%);
+      --btn-bg: #63e6be;
+      --btn-hover-bg: #38d9a9;
+      --border-aviso: #b2f2bb;
+      --aviso-title-color: #ff4d36;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fff6f3;
+      background: var(--body-bg-gradient);
+      color: var(--texto-escuro);
+      min-height: 100vh;
     }
 
     header {
-      background-color: #ff7e6b;
+      background: var(--header-bg-gradient);
       color: white;
       padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.3s ease;
+    }
+    header a:hover {
+      opacity: 0.8;
     }
 
     .container {
@@ -29,35 +59,42 @@
     }
 
     h1 {
-      color: #ff4d36;
+      color: var(--aviso-title-color);
+      margin-bottom: 20px;
     }
 
     .aviso {
-      background-color: #fff;
-      border-left: 6px solid #b2f2bb;
+      background-color: var(--card-bg);
+      border-left: 6px solid var(--border-aviso);
       padding: 15px;
       margin-bottom: 15px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    .aviso:hover {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
 
     .aviso h3 {
       margin-top: 0;
-      color: #ff4d36;
+      color: var(--aviso-title-color);
     }
 
     .aviso small {
       color: #888;
+      font-weight: 600;
     }
 
     .comentarios {
       margin-top: 10px;
       padding-left: 15px;
+      font-size: 14px;
+      color: var(--texto-escuro);
     }
 
     .comentarios p {
       margin: 5px 0;
-      font-size: 14px;
     }
 
     .novo-aviso {
@@ -67,23 +104,25 @@
 
     .novo-aviso button {
       padding: 10px 20px;
-      background-color: #63e6be;
+      background-color: var(--btn-bg);
       border: none;
       border-radius: 5px;
       color: #000;
       font-weight: bold;
-      cursor: pointer;
+      cursor: not-allowed;
+      opacity: 0.7;
+      transition: background-color 0.3s ease;
     }
 
-    .novo-aviso button:hover {
-      background-color: #38d9a9;
+    .novo-aviso button:hover:not(:disabled) {
+      background-color: var(--btn-hover-bg);
     }
   </style>
 </head>
 <body>
   <header>
     <div>GEINFO V3 - Avisos</div>
-    <a href="home.html" style="color:white; text-decoration:none;">Voltar</a>
+    <a href="home.html" aria-label="Voltar para a página inicial">Voltar</a>
   </header>
 
   <div class="container">
@@ -112,7 +151,6 @@
       <button disabled>+ Novo Aviso</button>
     </div>
   </div>
-
 </body>
 </html>
 

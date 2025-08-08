@@ -1,20 +1,35 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <title>GEINFO V3 - Campus IFPAR</title>
   <style>
+    :root {
+      --verde-bebe: #c8f7dc;
+      --salmao-claro: #ffddd2;
+      --salmao-escuro: #ff9980;
+      --verde-escuro: #007f5f;
+      --texto-escuro: #204033;
+      --header-bg-gradient: linear-gradient(90deg, var(--salmao-escuro), var(--verde-escuro));
+      --body-bg-gradient: linear-gradient(135deg, var(--salmao-claro) 0%, var(--verde-bebe) 100%);
+      --info-box-bg: #d9f0e8;
+      --info-box-border: #a6d6c8;
+      --btn-bg: var(--salmao-escuro);
+      --btn-hover-bg: #d04e34;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #ffe9e4; 
       margin: 0;
       padding: 0;
+      background: var(--body-bg-gradient);
       color: #3a3a3a;
+      min-height: 100vh;
     }
 
     header {
-      background-color: #a6d6c8; 
-      color: #204033;
+      background: var(--header-bg-gradient);
+      color: white;
       padding: 15px 20px;
       font-size: 1.6rem;
       font-weight: bold;
@@ -29,23 +44,24 @@
     }
 
     h2 {
-      color: #e76f51; 
+      color: var(--salmao-escuro);
       margin-bottom: 15px;
-      border-bottom: 2px solid #a6d6c8;
+      border-bottom: 2px solid var(--info-box-border);
       padding-bottom: 5px;
     }
 
     .info-box {
-      background-color: #d9f0e8; 
+      background-color: var(--info-box-bg);
       border-radius: 8px;
       padding: 15px 20px;
       margin-bottom: 20px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       line-height: 1.5;
+      color: var(--texto-escuro);
     }
 
     .info-box strong {
-      color: #204033;
+      color: var(--texto-escuro);
     }
 
     nav {
@@ -54,7 +70,7 @@
     }
 
     nav a {
-      background-color: #e76f51;
+      background-color: var(--btn-bg);
       color: white;
       text-decoration: none;
       padding: 12px 25px;
@@ -66,7 +82,7 @@
     }
 
     nav a:hover {
-      background-color: #d04e34;
+      background-color: var(--btn-hover-bg);
     }
 
   </style>

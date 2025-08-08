@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Professores - GEINFO V3</title>
-  <link rel="stylesheet" href="css/styles.css">
   <style>
+    :root {
+      --verde-bebe: #c8f7dc;
+      --salmao-claro: #ffddd2;
+      --salmao-escuro: #ff9980;
+      --verde-escuro: #007f5f;
+      --rosa-menu: #ffc1aa;
+      --texto-escuro: #204033;
+      --card-bg: #ffe5dc;
+      --card-border: #ffccb3;
+      --header-bg-gradient: linear-gradient(90deg, var(--salmao-escuro), var(--verde-escuro));
+      --body-bg-gradient: linear-gradient(135deg, var(--salmao-claro) 0%, var(--verde-bebe) 100%);
+    }
     body {
       font-family: Arial, sans-serif;
-      background-color: #fffaf8;
       margin: 0;
       padding: 0;
+      background: var(--body-bg-gradient);
+      color: var(--texto-escuro);
+      min-height: 100vh;
     }
-
     header {
-      background-color: #ffa07a;
+      background: var(--header-bg-gradient);
       color: white;
       padding: 15px;
       text-align: center;
       font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
     }
-
     .container {
       padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
     }
-
     .card {
-      background-color: #fdf6f3;
-      border: 2px solid #ffd1b3;
+      background-color: var(--card-bg);
+      border: 2px solid var(--card-border);
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+      transition: box-shadow 0.3s ease;
     }
-
+    .card:hover {
+      box-shadow: 0 8px 18px rgb(0 0 0 / 0.15);
+    }
     .card h2 {
       margin-top: 0;
-      color: #ff7043;
+      color: var(--salmao-escuro);
+      font-weight: 700;
     }
-
     .info {
       margin-top: 10px;
       line-height: 1.6;
+      font-weight: 600;
     }
-
     .info span {
       display: block;
       margin-bottom: 5px;
@@ -82,3 +99,4 @@
   </div>
 </body>
 </html>
+
