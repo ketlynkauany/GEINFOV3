@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>GEINFO V3 - Videoaulas e Links</title>
+  <style>
+    :root {
+      --verde-bebe: #c8f7dc;
+      --salmao-claro: #ffddd2;
+      --salmao-escuro: #ff9980;
+      --verde-escuro: #007f5f;
+      --rosa-menu: #ffc1aa;
+      --texto-escuro: #204033;
+      --card-bg: #ffe5dc;
+      --card-border: #ffccb3;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, var(--salmao-claro) 0%, var(--verde-bebe) 100%);
+      color: var(--texto-escuro);
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, var(--salmao-escuro), var(--verde-escuro));
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    }
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h2 {
+      color: var(--verde-escuro);
+      border-bottom: 2px solid var(--rosa-menu);
+      padding-bottom: 5px;
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.15);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: var(--salmao-escuro);
+    }
+    .card p {
+      margin: 5px 0;
+    }
+    .card a {
+      color: var(--verde-escuro);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    .card a:hover {
+      color: var(--salmao-escuro);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>Videoaulas e Links Recomendados</header>
+  <div class="container">
+    <div class="card">
+      <h3>Canal: Curso em Vídeo - Lógica de Programação</h3>
+      <p><a href="https://www.youtube.com/watch?v=5uMINzGMJZ0" target="_blank" rel="noopener noreferrer">Assista no YouTube</a></p>
+    </div>
+    <div class="card">
+      <h3>Playlist: Matemática no Enem</h3>
+      <p><a href="https://www.youtube.com/playlist?list=PLf..." target="_blank" rel="noopener noreferrer">Ver playlist</a></p>
+    </div>
+  </div>
+</body>
+</html>
