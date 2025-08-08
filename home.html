@@ -136,6 +136,7 @@
     }
     .profile-card img{
       width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--branco);
+      cursor:pointer;
     }
     .profile-card .name{font-weight:700;font-size:14px}
 
@@ -223,7 +224,7 @@
     <header class="top" role="banner">
       <div>
         <div class="title" aria-hidden="true">GEINFOV3</div>
-        <div style="color:#444;margin-top:6px;font-size:13px">Grupo de Estudos — 3º ano vespertino</div>
+        <div style="color:#444;margin-top:6px;font-size:13px">Grupo de Estudos  INFO — 3º ano vespertino</div>
       </div>
 
       <div class="rightbar" role="region" aria-label="Ações rápidas">
@@ -243,7 +244,9 @@
         </div>
 
         <div class="profile-card" title="Seu perfil">
-          <img id="profilePic" src="" alt="Foto do usuário" />
+          <a id="profileLink" href="#" aria-label="Ver perfil">
+            <img id="profilePic" src="" alt="Foto do usuário" />
+          </a>
           <div>
             <div class="name" id="studentName">Usuário</div>
             <div style="font-size:12px;color:#666">Aluno</div>
@@ -311,10 +314,14 @@
       const nameEl = document.getElementById('studentName');
       const sideNameEl = document.getElementById('sideUserName');
       const profilePic = document.getElementById('profilePic');
+      const profileLink = document.getElementById('profileLink');
   
       const displayName = (usuario && usuario.nome) ? usuario.nome : 'Usuário';
       nameEl.textContent = displayName;
       if(sideNameEl) sideNameEl.textContent = displayName;
+  
+      // Define o link para a página de perfil com parâmetro nome
+      profileLink.href = `perfilUser.html?nome=${encodeURIComponent(displayName)}`;
   
       // 2) Imagem de perfil - procura arquivo por nome normalizado; fallback para default
       (function setProfileImage(){
@@ -437,9 +444,3 @@
   
 </body>
 </html>
-
-</body>
-</html>
-
-
-
